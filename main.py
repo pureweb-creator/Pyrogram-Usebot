@@ -6,16 +6,6 @@ from random import randint
 import re
 
 app = Client("my_account")
-
-# @app.on_message()
-# async def echo(client, message):
-#     if 'Я' in message.text:
-#         output_text = message.text.replace('Я','Ты')
-#         await message.reply_text(output_text)
-#     if 'я' in message.text:
-#         output_text = message.text.replace('я','ты')
-#         await message.reply_text(output_text)
-
 @app.on_message(filters.command("ufo", prefixes="/"))
 async def main(client,message):
     try:
@@ -56,13 +46,12 @@ async def type(client,message):
     except FloodWait as e:
         sleep(e.x)
 
-@app.on_message(filters.me)
+@app.on_message()
 async def send_cat(client,message):
     try:
         ''' send random cat image '''
         image = randint(0,17)
         input_message = re.split('[-+# ,.!@$%^&*()]', message.text)
-        print(input_message)
         f = open('src/cats.txt',encoding='utf-8',mode='r')
         cats = f.read()
         cats = cats.split(',')
