@@ -12,5 +12,5 @@ for el in items:
 
 for el in range(len(gifs)):
     img_data = requests.get(gifs[el]).content
-    with open(f'images/cat{el}.gif','wb') as handler:
+    with open(f'downloads/cat{el}.gif','wb') as handler:
         handler.write(img_data)

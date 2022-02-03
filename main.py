@@ -2,12 +2,12 @@ from sys import prefix
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait
 from time import sleep
-from random import randint
+import glob,random
 import re
 
 app = Client("my_account")
 @app.on_message(filters.command("ufo", prefixes="/"))
-async def main(client,message):
+async def ufo(client,message):
     try:
         for _ in range(0,101,5):
             await message.edit("Поиск данных об НЛО "+str(_)+"%")
@@ -46,22 +46,31 @@ async def type(client,message):
     except FloodWait as e:
         sleep(e.x)
 
-@app.on_message()
-async def send_cat(client,message):
-    try:
-        ''' send random cat image '''
-        image = randint(0,17)
-        input_message = re.split('[-+# ,.!@$%^&*()]', message.text)
-        f = open('src/cats.txt',encoding='utf-8',mode='r')
-        cats = f.read()
-        cats = cats.split(',')
+f = open('src/cats.txt',encoding='utf-8',mode='r')
+cats = f.read()
+cats = cats.split(',')
+file_path_type = ["./downloads/*.gif","./downloads/*.mp4"]
 
-        if set(input_message) & set(cats):
-            await message.reply_animation(f'images/cat{image}.gif')
+@app.on_message()
+async def main(client,message):
+    try:
+        if(message.animation):   
+            await client.download_media(message)
+            await message.reply_text('Спасибо за сотрудничество!👊 Кот был добавлен в общую базу всех котов. 😼')
+        if(message.text):
+            ''' send random cat image '''
+            input_message = re.split('[-+# ,.!@$%^&*()]', message.text)
+            input_message = [msg.lower() for msg in input_message]
+
+            if set(input_message) & set(cats):
+                images = glob.glob(random.choice(file_path_type))
+                random_image = random.choice(images)
+                await message.reply_animation(random_image)
 
     except FloodWait as e:
         sleep(e.x)
 
+# debug
 @app.on_message(filters.command("info", prefixes="/"))
 async def info(client, message):
     print(client)
