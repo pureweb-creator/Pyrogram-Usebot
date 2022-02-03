@@ -2,6 +2,7 @@ from sys import prefix
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait
 from time import sleep
+from datetime import datetime
 import glob,random
 from random import randint
 import re
@@ -9,11 +10,12 @@ import uuid
 import config as cfg
 
 app = Client("my_account")
+
 @app.on_message(filters.command("ufo", prefixes="/"))
 async def ufo(_,message):
     try:
-        for _ in range(0,101,5):
-            await message.edit("Поиск данных об НЛО "+str(_)+"%")
+        for i in range(0,101,5):
+            await message.edit("Поиск данных об НЛО "+str(i)+"%")
         is_ufo = randint(0,1)
         
         if is_ufo==False:
@@ -52,7 +54,6 @@ async def type(_,message):
 f = open('src/cats.txt',encoding='utf-8',mode='r')
 cats = f.read()
 cats = cats.split(',')
-file_path_type = ["./downloads/*.gif","./downloads/*.mp4"]
 
 @app.on_message(filters.user(cfg.allowed_users))
 async def main(client, message):
@@ -67,17 +68,10 @@ async def main(client, message):
             input_message = [msg.lower() for msg in input_message]
 
             if set(input_message) & set(cats):
-                images = glob.glob(random.choice(file_path_type))
+                images = glob.glob(random.choice(cfg.file_path_type))
                 random_image = random.choice(images)
                 await message.reply_animation(random_image)
 
     except FloodWait as e:
         sleep(e.x)
-
-# debug
-@app.on_message(filters.command("info", prefixes="/"))
-async def info(client, message):
-    print(client)
-    print(message)
-    
 app.run()
