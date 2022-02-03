@@ -3,11 +3,13 @@ from pyrogram import Client, filters
 from pyrogram.errors import FloodWait
 from time import sleep
 import glob,random
+from random import randint
 import re
+import uuid
 
 app = Client("my_account")
 @app.on_message(filters.command("ufo", prefixes="/"))
-async def ufo(client,message):
+async def ufo(_,message):
     try:
         for _ in range(0,101,5):
             await message.edit("Поиск данных об НЛО "+str(_)+"%")
@@ -21,7 +23,7 @@ async def ufo(client,message):
         sleep(e.x)
 
 @app.on_message(filters.command("repeat", prefixes="/"))
-async def repeat(client,message):
+async def repeat(_,message):
     try:
         repeat_count = message.text.split(' ')
         repeat_count = int(repeat_count[-1])
@@ -35,7 +37,7 @@ async def repeat(client,message):
         sleep(e.x)
 
 @app.on_message(filters.command("type", prefixes="/") & filters.me)
-async def type(client,message):
+async def type(_,message):
     try:
         input_message = message.text.split("/type")[1].strip()
         output_message = ""
@@ -54,8 +56,12 @@ file_path_type = ["./downloads/*.gif","./downloads/*.mp4"]
 @app.on_message()
 async def main(client,message):
     try:
+
+
+
         if(message.animation):   
-            await client.download_media(message)
+            file_name = str(uuid.uuid4())
+            await client.download_media(message,file_name+".mp4")
             await message.reply_text('Спасибо за сотрудничество!👊 Кот был добавлен в общую базу всех котов. 😼')
         if(message.text):
             ''' send random cat image '''
