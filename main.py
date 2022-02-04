@@ -60,7 +60,7 @@ async def main(client, message):
     try:
         if(message.animation):   
             file_name = str(uuid.uuid4().hex)
-            await client.download_media(message,file_name+".mp4")
+            await client.download_media(message,"./downloads/"+file_name+".mp4")
             await message.reply_text('Спасибо за сотрудничество!👊 Кот был добавлен в общую базу всех котов. 😼')
         if(message.text):
             ''' send random cat image '''
