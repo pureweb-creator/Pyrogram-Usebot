@@ -1,6 +1,7 @@
 import requests
 import config
 from bs4 import BeautifulSoup as BS
+import uuid
 
 r = requests.get(config.siteurl)
 html = BS(r.content, 'html.parser')
@@ -12,5 +13,6 @@ for el in items:
 
 for el in range(len(gifs)):
     img_data = requests.get(gifs[el]).content
-    with open(f'downloads/cat{el}.gif','wb') as handler:
+    file_name = str(uuid.uuid4().hex)
+    with open(f'downloads/{file_name}.gif','wb') as handler:
         handler.write(img_data)
