@@ -59,7 +59,7 @@ cats = cats.split(',')
 async def main(client, message):
     try:
         if(message.animation):   
-            file_name = str(datetime.datetime.now().date()+"_"+datetime.datetime.now().time().replace(":",".")+uuid.uuid4().hex)
+            file_name = str(datetime.now().date()+"_"+datetime.now().time().replace(":",".")+uuid.uuid4().hex)
             await client.download_media(message,file_name+".mp4")
             await message.reply_text('Спасибо за сотрудничество!👊 Кот был добавлен в общую базу всех котов. 😼')
         if(message.text):
