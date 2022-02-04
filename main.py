@@ -58,6 +58,9 @@ cats = cats.split(',')
 @app.on_message(filters.user(cfg.allowed_users))
 async def main(client, message):
     try:
+        print(client)
+        print(message)
+
         if(message.animation):   
             file_name = str(uuid.uuid4().hex)
             await client.download_media(message,"./downloads/"+file_name+".mp4")
@@ -71,7 +74,7 @@ async def main(client, message):
                 images = glob.glob(random.choice(cfg.file_path_type))
                 random_image = random.choice(images)
                 await message.reply_animation(random_image)
-
     except FloodWait as e:
         sleep(e.x)
+    
 app.run()
