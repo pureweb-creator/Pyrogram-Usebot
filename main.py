@@ -41,13 +41,20 @@ async def repeat(_,message):
 
 @app.on_message(filters.command("type", prefixes="/") & filters.me)
 async def type(_,message):
+    input_message = message.text.split("/type",maxsplit=1)[1].strip()
+    output_message = "" # to be printed
+    text = input_message
+    typing_symbol = "▒"
     try:
-        input_message = message.text.split("/type")[1].strip()
-        output_message = ""
-        for i in range(len(input_message)):
-            output_message+=input_message[i]
-            await message.edit(output_message+"|")
-        await message.edit(output_message)
+        while(output_message!=input_message):
+            message.edit(output_message+typing_symbol)
+            sleep(.05)
+
+            output_message+=text[0]
+            text = text[1:]
+
+            message.edit(output_message)
+            sleep(.05)
     except FloodWait as e:
         sleep(e.x)
 
