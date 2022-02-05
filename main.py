@@ -45,8 +45,9 @@ async def type(_,message):
     output_message = "" # to be printed
     text = input_message
     typing_symbol = "▒"
-    try:
-        while(output_message!=input_message):
+    
+    while(output_message!=input_message):
+        try:
             message.edit(output_message+typing_symbol)
             sleep(.05)
 
@@ -55,8 +56,8 @@ async def type(_,message):
 
             message.edit(output_message)
             sleep(.05)
-    except FloodWait as e:
-        sleep(e.x)
+        except FloodWait as e:
+            sleep(e.x)
 
 f = open('src/cats.txt',encoding='utf-8',mode='r')
 cats = f.read()
