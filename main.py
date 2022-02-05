@@ -48,13 +48,13 @@ async def type(_,message):
     
     while(output_message!=input_message):
         try:
-            message.edit(output_message+typing_symbol)
+            await message.edit(output_message + typing_symbol)
             sleep(.05)
 
             output_message+=text[0]
             text = text[1:]
 
-            message.edit(output_message)
+            await message.edit(output_message)
             sleep(.05)
         except FloodWait as e:
             sleep(e.x)
