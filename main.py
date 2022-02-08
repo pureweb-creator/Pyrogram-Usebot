@@ -6,7 +6,6 @@ from datetime import datetime
 import glob,random
 from random import randint
 import re
-import uuid
 import config as cfg
 
 app = Client("my_account")
@@ -80,7 +79,7 @@ async def main(client, message):
                 random_image = random.choice(images)
                 await message.reply_animation(random_image)
 
-            if set(input_message & ['привет','Привет']):
+            if set(input_message & set(['привет','Привет'])):
                 await message.reply_text("__Привет__🤟")
     except FloodWait as e:
         sleep(e.x)
